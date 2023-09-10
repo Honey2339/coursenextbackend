@@ -18,7 +18,7 @@ function createJwt(username: string) {
 
 app.use(express.json())
 app.use(cookieParser())
-app.use(cors({ credentials: true, origin: "http://localhost:3000" }))
+app.use(cors({ credentials: true, origin: "https://learnifyhoney.netlify.app/" }))
 
 app.post("/user/signup", async (req: Request, res: Response) => {
   const { username, password } = req.body
