@@ -16,11 +16,20 @@ function createJwt(username: string) {
   return jwt.sign({ username }, KEY as Secret, { expiresIn: "1hr" })
 }
 
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://learnifyhoney.netlify.app",
+  "https://coursenextfrontend.vercel.app",
+]
+
+const corsOptions = {
+  credentials: true,
+  origin: allowedOrigins,
+}
+
 app.use(express.json())
 app.use(cookieParser())
-app.use(
-  cors({ credentials: true, origin: "https://learnifyhoney.netlify.app" })
-)
+app.use(cors(corsOptions))
 
 app.post("/user/signup", async (req: Request, res: Response) => {
   const { username, password } = req.body
