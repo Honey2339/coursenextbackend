@@ -26,9 +26,18 @@ const prisma = new client_1.PrismaClient();
 function createJwt(username) {
     return jsonwebtoken_1.default.sign({ username }, KEY, { expiresIn: "1hr" });
 }
+const allowedOrigins = [
+    "http://localhost:3000",
+    "https://learnifyhoney.netlify.app",
+    "https://coursenextfrontend.vercel.app",
+];
+const corsOptions = {
+    credentials: true,
+    origin: allowedOrigins,
+};
 app.use(express_1.default.json());
 app.use((0, cookie_parser_1.default)());
-app.use((0, cors_1.default)({ credentials: true, origin: "https://learnifyhoney.netlify.app" }));
+app.use((0, cors_1.default)(corsOptions));
 app.post("/user/signup", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { username, password } = req.body;
     const user = yield prisma.user.findFirst({ where: { username } });
